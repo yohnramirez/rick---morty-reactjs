@@ -1,11 +1,20 @@
 import { Button, Flex } from "@chakra-ui/react";
 
-const Pagination = ({ goNextPage, goPrevPage }) => {
+const Pagination = ({ page, setPage }) => {
+
+    const prev = () => {
+        if (page === 1) return
+        setPage(p => p - 1)
+    }
+
+    const next = () => {
+        setPage(p => p + 1)
+    }
 
     return (
-        <Flex gap={4} mt={5}>
-            {goPrevPage && <Button bgColor='brand.100' color='brand.500' onClick={goPrevPage}>Previous</Button>}
-            {goNextPage && <Button bgColor='brand.100' color='brand.500' onClick={goNextPage}>Next</Button>}
+        <Flex justifyContent='center' gap={5} my={5} color='brand.white'>
+            <Button bgColor='brand.orange' onClick={prev}>Prev</Button>
+            <Button bgColor='brand.orange' onClick={next}>Next</Button>
         </Flex>
     )
 }

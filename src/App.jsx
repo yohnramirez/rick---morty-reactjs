@@ -1,89 +1,39 @@
-import { useState, useEffect } from "react";
-import { Flex, Input } from "@chakra-ui/react";
+import { useEffect, useState } from "react"
+import { Box } from "@chakra-ui/react";
 import axios from "axios";
 
-import CharacterList from "./components/CharacterList";
+import CharacterList from "./components/CharacterList"
 import CharacterCard from "./components/CharacterCard";
 import Pagination from "./components/Pagination";
+import Search from "./components/Search";
 
 const App = () => {
 
-  const [character, setCharacter] = useState([]);
-  const [currentPageUrl, setCurrentPageUrl] = useState('https://rickandmortyapi.com/api/character/');
-  const [nextPageUrl, setNextPageUrl] = useState();
-  const [prevPageUrl, setPrevPageUrl] = useState();
-  const [search, setSearch] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [characters, setCharacters] = useState([]);
+  
+  let api = `https://rickandmortyapi.com/api/character/?page=${page}&name=${search}`;
 
   useEffect(() => {
-    setLoading(true);
-    
-    let cancel;
 
-    axios
-      .get(currentPageUrl, {
-        cancelToken: new axios.CancelToken(c => (cancel = c))
-      })
-      .then(res => {
-        setLoading(false);
-        setNextPageUrl(res.data.info.next);
-        setPrevPageUrl(res.data.info.prev);
-        setCharacter(res.data.results.map(i => 
-          (
-            <CharacterCard name={i.name} status={i.status} species={i.species} image={i.image}/>
-          )
-        ));
-      })
-      .catch(error => console.log(error))
-
-    return () => cancel()
-
-  }, [currentPageUrl]);
-
-  const goNextPage = () => {
-    setCurrentPageUrl(nextPageUrl)
-  }
-
-  const goPrevPage = () => {
-    setCurrentPageUrl(prevPageUrl)
-  }
-
-  const handleChange = e =>{
-    setSearch(e.target.value)
-    filterCharacter(e.target.value)
-  }
-
-  const filterCharacter = input => {
-    let result = character.filter( e => {
-      if(e.props.name.toString().toLowerCase().includes(input.toLowerCase())){
-        return e
-      }
+    axios.get(api)
+    .then(res => setCharacters(res.data.results.map(c => {
+      return(
+        <CharacterCard name={c.name} status={c.status} species={c.species} image={c.image}/>
+      )
     })
-
-    setCharacter(result)
-  }
-
-  if(loading) return "Loading..."
+    ))
+    .catch(error => console.log(error))
+   
+  }, [api]);
 
   return (
-    <>
-      <Flex justifyContent='center' alignItems='center' margin={5}>
-        <Input 
-          type='search' 
-          placeholder='Search characters' 
-          _placeholder={{ opacity: 0.5, color: 'brand.100' }}
-          onChange={handleChange}
-          />
-      </Flex>
-      <Flex direction='column' alignItems='center' justifyContent='center' mt={10}>
-          <CharacterList character={character}/>
-
-        <Pagination
-          goNextPage={nextPageUrl ? goNextPage : null}
-          goPrevPage={prevPageUrl ? goPrevPage : null}
-        />
-      </Flex>
-    </>
+    <Box bgColor='brand.black' py={5}>
+      <Search setPage={setPage} setSearch={setSearch}/>
+      <CharacterList characters={characters}/>
+      <Pagination page={page} setPage={setPage}/>
+    </Box>
   )
 }
 

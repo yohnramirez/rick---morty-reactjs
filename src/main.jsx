@@ -5,11 +5,13 @@ import App from './App'
 
 const colors = {
   brand: {
-    100: '#143F6B',
-    200: '#F55353',
-    300: '#FEB139',
-    400: '#F6F54D',
-    500: '#EEEEEE'
+    black: '#202329',
+    red: '#F55353',
+    orange: '#FF9800',
+    white: '#EEEEEE',
+    gray: '#3C3E44',
+    green: '#55CC44',
+    softGray: '#9E9E9E'
   }
 }
 
