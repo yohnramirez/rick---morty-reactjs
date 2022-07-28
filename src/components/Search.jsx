@@ -10,7 +10,11 @@ const Search = ({ setPage, setSearch }) => {
     return (
         <Flex justifyContent='center' alignItems='center' m={5}>
             <FormControl>
-                <Input onChange={handleChange} type='search' placeholder="Search characters" bgColor='brand.white'/>
+                <Input 
+                    onChange={handleChange} 
+                    type='search' placeholder="Search characters" 
+                    bgColor='brand.white'
+                />
             </FormControl>
         </Flex>
     )

@@ -1,11 +1,12 @@
-import { Heading, Box, Image, Text, Flex } from "@chakra-ui/react"
+import { Box, Image, Text, Flex } from "@chakra-ui/react"
+import LinkCard from "./LinkCard"
 
-const CharacterCard = ({ name, status, species, image }) => {
+const CharacterCard = ({ id, name, status, species, image }) => {
   return ( 
-    <Box borderRadius={5} overflow='hidden' bgColor='brand.gray' color='brand.white'>
+    <Box borderRadius={5} overflow='hidden' bgColor='brand.gray' color='brand.white' shadow='xl'>
       <Image src={image} alt={name} />
       <Box padding={2}>
-        <Heading as='h2' size='md' textAlign='left' mb={2} fontWeight='bold'>{name}</Heading>
+        <LinkCard id={id} nameCharacter={name}/>
         <Flex gap={2}>
           <Box 
             bgColor={

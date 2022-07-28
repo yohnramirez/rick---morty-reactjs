@@ -1,38 +1,21 @@
-import { useEffect, useState } from "react"
+import { Routes, Route } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
-import axios from "axios";
 
-import CharacterList from "./components/CharacterList"
-import CharacterCard from "./components/CharacterCard";
-import Pagination from "./components/Pagination";
-import Search from "./components/Search";
+import Home from "./components/Home";
+import Details from "./components/Details";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 
 const App = () => {
 
-  const [page, setPage] = useState(1);
-  const [search, setSearch] = useState("");
-  const [characters, setCharacters] = useState([]);
-  
-  let api = `https://rickandmortyapi.com/api/character/?page=${page}&name=${search}`;
-
-  useEffect(() => {
-
-    axios.get(api)
-    .then(res => setCharacters(res.data.results.map(c => {
-      return(
-        <CharacterCard name={c.name} status={c.status} species={c.species} image={c.image}/>
-      )
-    })
-    ))
-    .catch(error => console.log(error))
-   
-  }, [api]);
-
   return (
-    <Box bgColor='brand.black' py={5}>
-      <Search setPage={setPage} setSearch={setSearch}/>
-      <CharacterList characters={characters}/>
-      <Pagination page={page} setPage={setPage}/>
+    <Box bgColor='brand.black'>
+      <Header/>
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/details/:id" element={<Details/>} />
+      </Routes>
+      <Footer/>
     </Box>
   )
 }

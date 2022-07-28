@@ -16,7 +16,7 @@ const Pagination = ({ page, setPage }) => {
             <Button bgColor='brand.orange' onClick={prev}>Prev</Button>
             <Button bgColor='brand.orange' onClick={next}>Next</Button>
         </Flex>
-    )
+    )   
 }
 
 export default Pagination

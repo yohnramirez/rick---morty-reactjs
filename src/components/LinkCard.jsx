@@ -1,8 +1,18 @@
-import { Heading } from "@chakra-ui/react"
+import { Heading, Link } from "@chakra-ui/react"
+import { Link as ReachLink } from "react-router-dom"
 
-const LinkCard = () => {
+const LinkCard = ({ id, nameCharacter }) => {
   return (
-    <Heading></Heading>
+      <Link as={ReachLink} to={`/details/${id}`} _hover={{color: 'brand.orange', textDecoration: 'none'}}>
+        <Heading 
+          as='h2' 
+          size='md' 
+          textAlign='left' 
+          mb={2} 
+          fontWeight='bold'>
+            {nameCharacter}
+        </Heading>
+      </Link>
   )
 }
 
